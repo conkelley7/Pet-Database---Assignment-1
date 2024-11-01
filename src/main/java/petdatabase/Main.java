@@ -4,6 +4,7 @@ package petdatabase;
  * Entry point for program. Contains user interactions.
  * @author conke
  */
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -21,7 +22,9 @@ public class Main {
             System.out.println("What would you like to do?");
             System.out.println("1) View all pets");
             System.out.println("2) Add more pets");
-            System.out.println("3) Exit program");
+            System.out.println("3) Search pets by name");
+            System.out.println("4) Search pets by age");
+            System.out.println("5) Exit program");
             System.out.print("Your choice: ");
             input = scnr.nextLine();
 
@@ -49,11 +52,25 @@ public class Main {
                         }
                     }
                     break;
-                // Exiting program
+                    
                 case "3":
+                    System.out.print("Enter pet name to search: ");
+                    String searchName = scnr.nextLine();
+                    ArrayList<Pet> foundByName = database.searchByName(searchName);
+                    database.displayPets(foundByName);
+                    break;
+                case "4":
+                    System.out.print("Enter pet age to search: ");
+                    int searchAge = Integer.parseInt(scnr.nextLine());
+                    ArrayList<Pet> foundByAge = database.searchByAge(searchAge);
+                    database.displayPets(foundByAge);
+                    break;
+                // Exiting program
+                case "5":
                     System.out.println("Exiting program.");
                     scnr.close();
                     return;
+ 
                 // Handle invalid input
                 default:
                     System.out.println("Invalid choice. Please try again.");
