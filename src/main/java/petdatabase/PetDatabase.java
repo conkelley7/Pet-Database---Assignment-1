@@ -35,6 +35,18 @@ public class PetDatabase {
         System.out.printf("%d rows in set.\n", petsToDisplay.size());
     }
     
+    public void updatePet(int id, String newName, int newAge) {
+        if (id >= 0 && id < pets.size()) {
+            pets.set(id, new Pet(newName, newAge));
+        }
+    }
+
+    public void removePet(int id) {
+        if (id >= 0 && id < pets.size()) {
+            pets.remove(id);
+        }
+    }
+    
     public ArrayList<Pet> searchByName(String name) {
         ArrayList<Pet> result = new ArrayList<>();
         for (Pet pet : pets) {
