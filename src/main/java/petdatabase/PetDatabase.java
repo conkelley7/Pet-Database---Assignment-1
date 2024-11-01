@@ -2,8 +2,8 @@ package petdatabase;
 
 /**
  * This class contains methods for managing database.
- * Version 1: Contains methods for adding and displaying pets.
- * Future version will expand capabilities.
+ * Current version includes methods for adding, displaying, updating, removing, and searching pets.
+ * 
  * @author conke
  */
 import java.util.ArrayList;
