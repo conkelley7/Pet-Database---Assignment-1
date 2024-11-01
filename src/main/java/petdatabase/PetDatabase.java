@@ -18,16 +18,40 @@ public class PetDatabase {
     public void addPet(String name, int age) {
         pets.add(new Pet(name, age));
     }
-
-    public void displayPets() {
+    
+    public void displayPets(){
+        displayPets(pets);
+    }
+    
+    public void displayPets(ArrayList<Pet> petsToDisplay) {
         System.out.printf("+----------------------+\n");
         System.out.printf("| ID | NAME      | AGE |\n");
         System.out.printf("+----------------------+\n");
-        for (int i = 0; i < pets.size(); i++) {
-            Pet pet = pets.get(i);
+        for (int i = 0; i < petsToDisplay.size(); i++) {
+            Pet pet = petsToDisplay.get(i);
             System.out.printf("| %2d | %-10s | %3d |\n", i, pet.getName(), pet.getAge());
         }
         System.out.printf("+----------------------+\n");
-        System.out.printf("%d rows in set.\n", pets.size());
+        System.out.printf("%d rows in set.\n", petsToDisplay.size());
+    }
+    
+    public ArrayList<Pet> searchByName(String name) {
+        ArrayList<Pet> result = new ArrayList<>();
+        for (Pet pet : pets) {
+            if (pet.getName().equalsIgnoreCase(name)) {
+                result.add(pet);
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<Pet> searchByAge(int age) {
+        ArrayList<Pet> result = new ArrayList<>();
+        for (Pet pet : pets) {
+            if (pet.getAge() == age) {
+                result.add(pet);
+            }
+        }
+        return result;
     }
 }
