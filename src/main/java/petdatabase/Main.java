@@ -38,29 +38,64 @@ public class Main {
                 // Adding pets
                 case "2":
                     while (true) {
-                        System.out.print("add pet (name, age): ");
+                        System.out.print("add pet (name and age): ");
                         input = scnr.nextLine();
                         if (input.equals("done")) {
                             System.out.println(petCounter + " pets added.");
                             petCounter = 0;
                             break;
                         }
+                        if (input.contains(",")) {
+                            System.out.println("Error: Input must not contain a comma.");
+                            continue;
+                        }
                         String[] parts = input.split(" ");
-                        if (parts.length == 2) {
-                            String name = parts[0];
+                        if (parts.length != 2) {
+                            System.out.println("Error: You must enter both a name and an age.");
+                            continue;
+                        }
+                        String name = parts[0];
+                        try {
                             int age = Integer.parseInt(parts[1]);
                             database.addPet(name, age);
                             petCounter += 1;
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error: Age must be a number");
                         }
                     }
                     break;
                 // Updating pets
                 case "3":
-                    System.out.print("Enter pet ID to update: ");
-                    int updateId = Integer.parseInt(scnr.nextLine());
+                    // Using while loop to get a valid ID.
+                    int updateId;
+                    while (true) {
+                        System.out.print("Enter pet ID to update: ");
+                    
+                        try {
+                            updateId = Integer.parseInt(scnr.nextLine());
+                            if (updateId < 0 || updateId > 5) {
+                                System.out.println("Error: ID must be a valid index.");
+                                continue;
+                            }
+                            break;
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error. ID must be a number.");
+                        }
+                    }
                     System.out.print("Enter new name and age: ");
                     String[] updateParts = scnr.nextLine().split(" ");
-                    database.updatePet(updateId, updateParts[0], Integer.parseInt(updateParts[1]));
+                    if (updateParts.length != 2) {
+                        System.out.println("Error: You must enter both a name and an age.");
+                    } else {
+                        try {
+                            String name = updateParts[0];
+                            int age = Integer.parseInt(updateParts[1]);
+                            
+                            database.updatePet(updateId, name, age);
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error: Age must be a valid number.");
+                        }
+                    }
                     break;
                 // Removing pets
                 case "4":
@@ -84,7 +119,9 @@ public class Main {
                     break;
                 // Exiting program
                 case "7":
-                    System.out.println("Exiting program.");
+                    System.out.println("Saving pets to file.");
+                    database.savePetsToFile();                    
+                    System.out.println("Exiting program.");                    
                     scnr.close();
                     return;
  
